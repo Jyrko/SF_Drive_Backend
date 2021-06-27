@@ -1,0 +1,56 @@
+Last login: Tue Jun  1 15:47:43 on ttys003
+ь%                                                                                                                                        macbook@MacBook-Pro-Macbook ~ % cd Downloads 
+macbook@MacBook-Pro-Macbook Downloads % nest new test-mongo-nestjs
+⚡  We will scaffold your app in a few seconds..
+
+CREATE test-mongo-nestjs/.eslintrc.js (631 bytes)
+CREATE test-mongo-nestjs/.prettierrc (51 bytes)
+CREATE test-mongo-nestjs/README.md (3339 bytes)
+CREATE test-mongo-nestjs/nest-cli.json (64 bytes)
+CREATE test-mongo-nestjs/package.json (1979 bytes)
+CREATE test-mongo-nestjs/tsconfig.build.json (97 bytes)
+CREATE test-mongo-nestjs/tsconfig.json (339 bytes)
+CREATE test-mongo-nestjs/src/app.controller.spec.ts (617 bytes)
+CREATE test-mongo-nestjs/src/app.controller.ts (274 bytes)
+CREATE test-mongo-nestjs/src/app.module.ts (249 bytes)
+CREATE test-mongo-nestjs/src/app.service.ts (142 bytes)
+[7:40:05 PM] File change detected. Starting incremental compilation...
+[7:58:17 PM] File change detected. Starting incremental compilation...
+
+src/auth/auth.controller.ts:54:28 - error TS2339: Property 'cookies' does not exist on type 'Request'.
+
+54     const cookie = request.cookies['jwt'];
+                              ~~~~~~~
+
+[7:58:17 PM] Found 1 error. Watching for file changes.
+
+^C
+macbook@MacBook-Pro-Macbook test-mongo-nestjs % npm i cookie-parser
+
+added 1 package, and audited 1032 packages in 2s
+
+83 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+macbook@MacBook-Pro-Macbook test-mongo-nestjs % npm i @types/cookie-parser
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
