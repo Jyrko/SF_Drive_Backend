@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Body, BadRequestException, Res, Req, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, BadRequestException, Res, Req, UnauthorizedException, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { FileInterceptor, FileFieldsInterceptor } from '@nestjs/platform-express';
+import { STORAGE_MULTER_CONFIG } from '../constants';
 import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt';
@@ -18,15 +20,28 @@ export class AuthController {
   }
 
   @Post('register')
+  @UseInterceptors(
+    FileFieldsInterceptor([
+        {name: 'file', maxCount: 1},
+        {name: 'profileImage', maxCount: 1},
+        {name: 'documentPhotos', maxCount: 5}
+
+    ], STORAGE_MULTER_CONFIG)
+  )
   async register(
+    @UploadedFiles() files,
     @Body() params,
     @Res({passthrough: true}) response: Response
     ) {
+
     const hashedPassword = await bcrypt.hash(params.password, 12);
 
     const user = await this.authService.createUser({
       name: params.name,
       email: params.email,
+      birthday: params.birthday,
+      passport: params.passport,
+      license: params.license,
       password: hashedPassword
     })
 

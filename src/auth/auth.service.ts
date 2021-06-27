@@ -12,9 +12,12 @@ export class AuthService {
     const manager = getMongoManager();
     const newUser = new User();
 
-    newUser.name = user.name
-    newUser.email = user.email
-    newUser.password = user.password
+    newUser.name = user.name;
+    newUser.email = user.email;
+    newUser.password = user.password;
+    newUser.birthdate = user.birthday;
+    newUser.passport = JSON.parse(user.passport);
+    newUser.license = JSON.parse(user.license);
     console.log(newUser);
 
     return await manager.save(newUser);
