@@ -2,21 +2,23 @@ import { Controller, Get, Post, Body, BadRequestException, Res, Req, Unauthorize
 import { FileInterceptor, FileFieldsInterceptor } from '@nestjs/platform-express';
 import { STORAGE_MULTER_CONFIG } from '../constants';
 import { AuthService } from './auth.service';
+import { AuthFilesService } from './auth-files.service';
 import * as bcrypt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt';
-import {Response, Request} from 'express';
+import {Response} from 'express';
 import { ObjectId } from 'mongodb';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
+    private readonly authFilesService: AuthFilesService,
     private jwtService: JwtService
     ) {}
 
   @Get()
   getHello(): string {
-    return this.authService.getHello();
+    return "Hello World, ";
   }
 
   @Post('register')
@@ -47,7 +49,15 @@ export class AuthController {
 
     delete user.password;
 
-    return user;
+    this.authFilesService.createUserFolder(user.email);
+
+    const jwt = await this.jwtService.signAsync({id: user._id});
+
+    return {
+      ...user,
+      accessToken: jwt,
+      message: "success"
+    };
   }
 
   @Post('login')
@@ -66,18 +76,20 @@ export class AuthController {
 
     const jwt = await this.jwtService.signAsync({id: user._id});
 
-    response.cookie('jwt', jwt, {httpOnly: true})
-
     return {
-      message: 'success'
+      message: 'success',
+      accessToken: jwt
     };
   }
 
-  @Get('user')
-  async user(@Req() request: Request) {
+  @Post('user')
+  async user(@Body() params) {
+    console.log(params);
     try {
-      const cookie = request.cookies['jwt'];
-      const data = await this.jwtService.verifyAsync(cookie);
+      const accessToken = params.accessToken;
+      const data = await this.jwtService.verifyAsync(accessToken);
+      console.log(accessToken);
+      console.log(data);
 
       if (!data) {
         throw new UnauthorizedException();
@@ -87,7 +99,7 @@ export class AuthController {
 
       const {password, ...result} = user;
 
-      return result;
+      return {...result, message: "success"};
 
     } catch (e) {
       throw new UnauthorizedException();
@@ -102,4 +114,5 @@ export class AuthController {
       message: "success"
     }
   }
+
 }

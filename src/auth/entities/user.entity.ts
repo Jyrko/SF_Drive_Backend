@@ -18,9 +18,12 @@ export class User {
 
   @Column()
   phone: string;
-  
+
   @Column()
   birthdate: Date;
+
+  @Column()
+  storagePath: string;
 
   @Column(() => Passport)
   passport: Passport;
