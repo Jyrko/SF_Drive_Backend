@@ -4,19 +4,19 @@ import * as fs from 'fs';
 @Injectable()
 export class AuthFilesService {
 
-  createUserFolder(email: string) {
-    const folderName = email.split("@")[0];
-    const folderPath = `./files/users/${folderName}`;
+  createCarFolder(id: string) {
+    const folderName = id;
+    const folderPath = `./files/cars/${folderName}`;
     console.log(folderPath);
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath);
     }
 
-    this.moveAllInUserFolder(folderPath);
+    this.moveAllInCarFolder(folderPath);
     return folderPath;
   }
 
-  private moveAllInUserFolder(folderPath: string) {
+  private moveAllInCarFolder(folderPath: string) {
     const files = fs.readdirSync('./files').filter(file => file.includes('.'));
     console.log("Files - " + files);
     for (let file of files) {

@@ -8,3 +8,9 @@ export const STORAGE_MULTER_CONFIG = {
       }
     })
 };
+
+export const SECRET_KEY = "FYkjhvajHRivuFASdgkuyF"
+export const JWT_REG_OBJECT = {
+  secret: SECRET_KEY,
+  signOptions: { expiresIn: '1d' }
+};
