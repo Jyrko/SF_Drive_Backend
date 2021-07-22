@@ -4,8 +4,8 @@ import * as fs from 'fs';
 @Injectable()
 export class AuthFilesService {
 
-  createUserFolder(email: string) {
-    const folderName = email.split("@")[0];
+  createUserFolder(id: string) {
+    const folderName = id.split("@")[0];
     const folderPath = `./files/users/${folderName}`;
     console.log(folderPath);
     if (!fs.existsSync(folderPath)) {

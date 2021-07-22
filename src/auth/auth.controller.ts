@@ -49,7 +49,7 @@ export class AuthController {
 
     delete user.password;
 
-    this.authFilesService.createUserFolder(user.email);
+    this.authFilesService.createUserFolder(String(user._id));
 
     const jwt = await this.jwtService.signAsync({id: user._id});
 
