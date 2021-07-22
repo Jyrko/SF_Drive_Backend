@@ -12,9 +12,6 @@ export default class CarOptions {
   airBags: boolean;
 
   @Column()
-  airConditioner: boolean;
-
-  @Column()
   bluetooth: boolean;
 
   @Column()
@@ -43,7 +40,7 @@ export default class CarOptions {
 
   @Column()
   roofRack: boolean;
-  
+
   @Column()
   parktronic: boolean;
 }
