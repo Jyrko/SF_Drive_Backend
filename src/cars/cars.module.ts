@@ -1,5 +1,6 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { CarsService } from './cars.service';
+import { CarFilesService } from './car-files.service';
 import { CarsController } from './cars.controller';
 import { JwtModule } from '@nestjs/jwt';
 
@@ -13,7 +14,7 @@ import { CarsRepository } from './repositories/cars.repository';
     JwtModule.register(JWT_REG_OBJECT)
   ],
   controllers: [CarsController],
-  providers: [CarsService, CarsRepository]
+  providers: [CarsService, CarsRepository, CarFilesService]
 })
 export class CarsModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

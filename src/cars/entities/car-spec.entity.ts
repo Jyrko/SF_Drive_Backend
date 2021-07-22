@@ -25,7 +25,6 @@ export default class CarSpec {
   @Column()
   color: String;
 
-  /////////////////
   @Column()
   engineType: String;
 
