@@ -1,5 +1,7 @@
 import { Entity, ObjectID, Column, ObjectIdColumn } from 'typeorm';
+import CarAdditionalServices from './car-additional-services.entity';
 import CarInsurance from './car-insurance.entity';
+import CarOptions from './car-options.entity';
 import CarRent from './car-rent.entity';
 import CarSpec from './car-spec.entity';
 
@@ -19,4 +21,10 @@ export class Car {
 
   @Column(() => CarInsurance)
   insurance: CarInsurance;
+
+  @Column(() => CarOptions)
+  options: CarOptions;
+
+  @Column(() => CarAdditionalServices)
+  services: CarAdditionalServices;
 }

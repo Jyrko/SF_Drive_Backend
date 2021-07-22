@@ -8,13 +8,13 @@ export default class CarSpec {
   _id: ObjectID;
 
   @Column()
-  manufacture: String;
+  manufacturer: String;
 
   @Column()
   model: String;
 
   @Column()
-  vehicleType: String;
+  yearOfProduction: String;
 
   @Column()
   vehicleRegistrationPlate: String;
@@ -25,6 +25,7 @@ export default class CarSpec {
   @Column()
   color: String;
 
+  /////////////////
   @Column()
   engineType: String;
 
@@ -41,6 +42,9 @@ export default class CarSpec {
   wheelDrive: String;
 
   @Column()
+  vehicleType: String;
+
+  @Column()
   mileage: String;
 
   @Column()
@@ -48,4 +52,5 @@ export default class CarSpec {
 
   @Column()
   stsSerial: String;
+
 }

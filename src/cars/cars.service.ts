@@ -15,6 +15,8 @@ export class CarsService {
     newCar.specs = car.specs;
     newCar.rentInfo = car.rentInfo;
     newCar.insurance = car.insurance;
+    newCar.options = car.options;
+    newCar.services = car.services;
 
     return await this.carsRepository.addCar(newCar);
   }

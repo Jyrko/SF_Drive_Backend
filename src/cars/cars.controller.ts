@@ -19,7 +19,9 @@ export class CarsController {
       ownerId: res.locals.id,
       specs: params.specs,
       rentInfo: params.rentInfo,
-      insurance: params.insurance
+      insurance: params.insurance,
+      options: params.options,
+      services: params.services
     });
 
     return car;
@@ -47,6 +49,6 @@ export class CarsController {
 
   @Get('/random-12')
   getRandom12Cars() {
-    
+
   }
 }
