@@ -19,7 +19,6 @@ export class CarsController {
   @UseInterceptors(
     FileFieldsInterceptor([
       {name: 'carPhotos', maxCount: 10},
-      {name: 'documentPhotos', maxCount: 5},
     ], STORAGE_MULTER_CONFIG_CARS)
   )
   async addNewCar(

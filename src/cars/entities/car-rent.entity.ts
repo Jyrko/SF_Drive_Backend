@@ -9,8 +9,8 @@ export default class CarRent {
   regularPrice: String;
 
   @Column()
-  ThreeDayRentPrice: String;
+  threeDayRentPrice: String;
 
   @Column()
-  FiveDayPlusRentPrice: String;
+  fiveDayPlusRentPrice: String;
 }
