@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, BadRequestException, Res, Req, UnauthorizedException, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, BadRequestException, Res, Req, UnauthorizedException, UseInterceptors, UploadedFiles, Param } from '@nestjs/common';
 import { FileInterceptor, FileFieldsInterceptor } from '@nestjs/platform-express';
 import { STORAGE_MULTER_CONFIG } from '../constants';
 import { AuthService } from './auth.service';
@@ -26,7 +26,6 @@ export class AuthController {
     FileFieldsInterceptor([
         {name: 'file', maxCount: 1},
         {name: 'profileImage', maxCount: 1},
-        {name: 'documentPhotos', maxCount: 5}
 
     ], STORAGE_MULTER_CONFIG)
   )
@@ -115,4 +114,20 @@ export class AuthController {
     }
   }
 
+  @Get("/user/basic-info/:id")
+  async getUserBasicInfo(
+    @Param() params
+  ) {
+    const user = await this.authService.findOne({_id: new ObjectId(params.id)});
+    const {password, birthdate, passport, license, ...result} = user;
+    return result;
+  }
+
+  @Get("/user/get-image/:id")
+  gerUserImage(
+    @Param() params
+  ) {
+
+    return ""
+  }
 }

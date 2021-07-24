@@ -19,13 +19,14 @@ export class CarsController {
   @UseInterceptors(
     FileFieldsInterceptor([
       {name: 'carPhotos', maxCount: 10},
+      {name: 'documentPhotos', maxCount: 10}
     ], STORAGE_MULTER_CONFIG_CARS)
   )
   async addNewCar(
     @Body() params,
     @Res({passthrough: true}) res
   ) {
-
+    console.log(params);
     const car = await this.carsService.addNewCar({
       ownerId: res.locals.id,
       specs: params.specs,
@@ -47,24 +48,37 @@ export class CarsController {
     return `params is ${params}`
   }
 
-  @Get("/car/:id")
-  getCarById(
+  @Get("/car/get-basic-info/:id")
+  async getBasicInfoById(
     @Param() params
   ) {
-    const foundCar = this.carsService.getCar(params.id);
+    const foundCar = await this.carsService.getCar(params.id);
+    const { options, services, insurance, ...result} = foundCar;
+    return result;
+  }
+
+  @Get("/car/get-full-info/:id")
+  async getFullInfoById(
+    @Param() params
+  ) {
+    const foundCar = await this.carsService.getCar(params.id);
     return foundCar;
   }
 
-  @Get('all-cars')
-  getCarsList() {
+  @Get("car/get-images/:id")
+  async getCarImages(
+    @Param() params
+  ) {
+    return "Hey, Hey";
+  }
 
+  @Get('get-list')
+  async getCarsList() {
+    return await this.carsService.getCarList();
   }
 
   @Get('/random-12')
-  getRandom12Cars() {
-
+  async getRandom12Cars() {
+    return await this.carsService.getCarRandom12List();
   }
-}
-function id(id: any, arg1: string) {
-  throw new Error('Function not implemented.');
 }

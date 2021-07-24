@@ -16,4 +16,9 @@ export class CarsRepository {
     console.log("ID in repo is " + id)
     return await repository.findOne({ _id: new ObjectID(id) })
   }
+
+  async getCarList() {
+    const repository = getMongoRepository(Car);
+    return await repository.find();
+  }
 }

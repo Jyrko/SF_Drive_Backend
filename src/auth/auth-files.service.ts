@@ -24,4 +24,14 @@ export class AuthFilesService {
       fs.renameSync(`./files/${file}`, `${folderPath}/${file}`);
     }
   }
+
+  findUserImage(id: string) {
+    const folderPath = `./files/users/${id}`;
+    console.log(folderPath);
+    if (fs.existsSync(folderPath)) {
+      
+    } else {
+      return "This user does not exist";
+    }
+  }
 }
