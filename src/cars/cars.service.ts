@@ -35,7 +35,7 @@ export class CarsService {
   }
 
   private cleanUpFromUnnecessaryData(car) {
-    const {options, services, insurance, ...result} = car;
+    const {insurance, ...result} = car;
     return result;
   }
 
