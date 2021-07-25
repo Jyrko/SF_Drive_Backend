@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { CarFilesService } from './car-files.service';
 import { Car } from './entities/car.entity';
 import { CarsRepository } from './repositories/cars.repository';
 
 @Injectable()
 export class CarsService {
-  constructor(private carsRepository: CarsRepository) {}
+  constructor(
+    private carsRepository: CarsRepository,
+    private readonly carFilesService: CarFilesService
+  ) {}
 
   async addNewCar(car: any) {
     const newCar = new Car();
@@ -31,19 +35,27 @@ export class CarsService {
 
   async getCarRandom12List() {
     const random12Array = await this.carsRepository.getCarList();
-    return this.cleanUpFromUnnecessaryDataArray(random12Array.slice(0, 11));
+    return this.cleanUpFromUnnecessaryDataAddImagePathesArray(random12Array.slice(0, 12));
   }
 
-  private cleanUpFromUnnecessaryData(car) {
+  private cleanUpFromUnnecessaryAddImagePathesData(car) {
+    const imagePathes = this.carFilesService.findCarImagesPath(car._id);
     const {insurance, ...result} = car;
-    return result;
+    return {
+      ...result,
+      images: imagePathes
+    };
   }
 
-  private cleanUpFromUnnecessaryDataArray(carList) {
+  private cleanUpFromUnnecessaryDataAddImagePathesArray(carList) {
     const newCarListArray = [];
     for (let car of carList) {
-      newCarListArray.push(this.cleanUpFromUnnecessaryData(car));
+      newCarListArray.push(this.cleanUpFromUnnecessaryAddImagePathesData(car));
     }
     return newCarListArray;
+  }
+
+  async getUserCarsById(id: string) {
+    return await this.carsRepository.getCarsByUserId(id);
   }
 }

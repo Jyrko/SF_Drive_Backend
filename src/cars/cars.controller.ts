@@ -81,4 +81,11 @@ export class CarsController {
   async getRandom12Cars() {
     return await this.carsService.getCarRandom12List();
   }
+
+  @Get('/by-user-id/:id')
+  async getCarByUserId (
+    @Param() params
+  ) {
+    return await this.carsService.getUserCarsById(params.id);
+  }
 }

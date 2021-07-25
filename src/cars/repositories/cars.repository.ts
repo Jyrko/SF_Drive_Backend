@@ -21,4 +21,14 @@ export class CarsRepository {
     const repository = getMongoRepository(Car);
     return await repository.find();
   }
+
+  async getCarsByUserId(id: string) {
+    const repository = getMongoRepository(Car);
+    console.log(id);
+    return await repository.find({
+        where: {
+          ['ownerId']: id
+        }
+     });
+  }
 }

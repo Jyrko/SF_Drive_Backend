@@ -105,29 +105,26 @@ export class AuthController {
     }
   }
 
-  @Post('logout')
-  async logout(@Res({passthrough: true}) response: Response) {
-    response.clearCookie('jwt');
-
-    return {
-      message: "success"
-    }
-  }
-
   @Get("/user/basic-info/:id")
   async getUserBasicInfo(
     @Param() params
   ) {
     const user = await this.authService.findOne({_id: new ObjectId(params.id)});
+    const filename = this.authFilesService.findUserImagePath(params.id);
     const {password, birthdate, passport, license, ...result} = user;
-    return result;
+    return {
+      ...result,
+      profileImage: `/files/users/${params.id}/${filename}`
+    };
   }
 
   @Get("/user/get-image/:id")
   gerUserImage(
     @Param() params
   ) {
-
-    return ""
+    const filename = this.authFilesService.findUserImagePath(params.id);
+    return {
+      profileImage: `/files/users/${params.id}/${filename}`
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 
 @Injectable()
@@ -25,13 +25,15 @@ export class AuthFilesService {
     }
   }
 
-  findUserImage(id: string) {
+  findUserImagePath(id: string) {
     const folderPath = `./files/users/${id}`;
     console.log(folderPath);
     if (fs.existsSync(folderPath)) {
-      
+      const files = fs.readdirSync(folderPath).filter(file => file.includes('.'));
+      if (files.length) return files[0];
+      throw new BadRequestException('User does not have profile image');
     } else {
-      return "This user does not exist";
+      throw new BadRequestException('This user does not exist');
     }
   }
 }
