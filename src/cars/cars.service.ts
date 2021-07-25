@@ -56,6 +56,6 @@ export class CarsService {
   }
 
   async getUserCarsById(id: string) {
-    return await this.carsRepository.getCarsByUserId(id);
+    return this.cleanUpFromUnnecessaryDataAddImagePathesArray(await this.carsRepository.getCarsByUserId(id));
   }
 }
