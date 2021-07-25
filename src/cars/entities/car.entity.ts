@@ -3,6 +3,7 @@ import CarAdditionalServices from './car-additional-services.entity';
 import CarInsurance from './car-insurance.entity';
 import CarOptions from './car-options.entity';
 import CarRent from './car-rent.entity';
+import CarReview from './car-review.entity';
 import CarSpec from './car-spec.entity';
 
 @Entity("cars")
@@ -27,4 +28,7 @@ export class Car {
 
   @Column(() => CarAdditionalServices)
   services: CarAdditionalServices;
+
+  @Column(() => CarReview)
+  reviews: CarReview[];
 }
