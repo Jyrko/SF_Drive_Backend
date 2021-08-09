@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
-import { getMongoRepository, Repository } from "typeorm";
-import { ObjectID } from "mongodb";
+import { getMongoRepository, Repository, ObjectID } from "typeorm";
+// import { ObjectID } from "type";
 import { Car } from "../entities/car.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 
 
 @Injectable()
 export class CarsRepository {
-  // 
+  //
   // constructor(
   //   @InjectRepository(Car)
   //   private readonly carsRepository: Repository<Car>

@@ -4,7 +4,7 @@ import { Entity, Column, ObjectIdColumn, ObjectID } from "typeorm";
 export default class CarInsurance {
   @ObjectIdColumn()
   _id: ObjectID;
-  
+
   @Column()
   osagoSerial: string;
 

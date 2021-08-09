@@ -6,7 +6,7 @@ import { AuthFilesService } from './auth-files.service';
 import * as bcrypt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt';
 import {Response} from 'express';
-import { ObjectId } from 'mongodb';
+import { ObjectID } from 'typeorm';
 
 @Controller('auth')
 export class AuthController {
@@ -94,7 +94,7 @@ export class AuthController {
         throw new UnauthorizedException();
       }
 
-      const user = await this.authService.findOne({_id: new ObjectId(data.id)});
+      const user = await this.authService.findOne({_id: new ObjectID(data.id)});
 
       const {password, ...result} = user;
 
@@ -109,7 +109,7 @@ export class AuthController {
   async getUserBasicInfo(
     @Param() params
   ) {
-    const user = await this.authService.findOne({_id: new ObjectId(params.id)});
+    const user = await this.authService.findOne({_id: new ObjectID(params.id)});
     const filename = this.authFilesService.findUserImagePath(params.id);
     const {password, birthdate, passport, license, ...result} = user;
     return {

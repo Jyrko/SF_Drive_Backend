@@ -31,7 +31,7 @@ export class Car {
 
   @Column()
   availability: Array<string>;
-  
+
   @Column(() => CarReview)
   reviews: CarReview[];
 }
