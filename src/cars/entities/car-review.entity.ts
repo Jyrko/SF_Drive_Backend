@@ -12,5 +12,8 @@ export default class CarReview {
   date: string;
 
   @Column()
+  rating: string;
+
+  @Column()
   content: string;
 }

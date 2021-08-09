@@ -29,9 +29,11 @@ export class Car {
   @Column(() => CarAdditionalServices)
   services: CarAdditionalServices;
 
+<<<<<<< HEAD
   @Column()
   availability: Array<string>;
-  
+=======
   @Column(() => CarReview)
   reviews: CarReview[];
+>>>>>>> 1e62bb751e4b54bf53a72177066ef6e5e2b7099e
 }

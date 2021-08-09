@@ -88,4 +88,6 @@ export class CarsController {
   ) {
     return await this.carsService.getUserCarsById(params.id);
   }
+
+  @Get('add-reserved-car-days/')
 }
