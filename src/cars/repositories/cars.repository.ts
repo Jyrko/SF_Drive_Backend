@@ -7,11 +7,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class CarsRepository {
-
-  constructor(
-    @InjectRepository(Car)
-    private readonly carsRepository: Repository<Car>
-  ) {}
+  // 
+  // constructor(
+  //   @InjectRepository(Car)
+  //   private readonly carsRepository: Repository<Car>
+  // ) {}
 
   async addCar(car: Car) {
     const repository = getMongoRepository(Car);
