@@ -27,4 +27,7 @@ export class Car {
 
   @Column(() => CarAdditionalServices)
   services: CarAdditionalServices;
+
+  @Column()
+  availability: Array<string>;
 }

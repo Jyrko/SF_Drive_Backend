@@ -30,7 +30,7 @@ export class CarsService {
   }
 
   async getCarList() {
-    return await this.carsRepository.getCarList();
+    return this.cleanUpFromUnnecessaryDataAddImagePathesArray(await this.carsRepository.getCarList());
   }
 
   async getCarRandom12List() {

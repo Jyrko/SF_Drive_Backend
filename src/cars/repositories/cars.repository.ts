@@ -1,11 +1,18 @@
 import { Injectable } from "@nestjs/common";
-import { getMongoRepository } from "typeorm";
+import { getMongoRepository, Repository } from "typeorm";
 import { ObjectID } from "mongodb";
 import { Car } from "../entities/car.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 
 @Injectable()
 export class CarsRepository {
+
+  constructor(
+    @InjectRepository(Car)
+    private readonly carsRepository: Repository<Car>
+  ) {}
+
   async addCar(car: Car) {
     const repository = getMongoRepository(Car);
     return await repository.save(car);
@@ -30,5 +37,12 @@ export class CarsRepository {
           ['ownerId']: id
         }
      });
+  }
+
+  async addReservedCarDays(carId: string, days: string) {
+    const repository = getMongoRepository(Car);
+    const car = await repository.findOne({ _id: new ObjectID(carId) });
+    car.availability.push(days);
+    return await repository.save(car);
   }
 }
