@@ -19,22 +19,23 @@ export class MessagesController {
   @Get()
   public async messages(
     @Req() req: any,
-    @Res() res: any,
+    @Res({passthrough: true}) res: any,
     @Query('selectedUser') selectedUser: string,
   ) {
     const id = res.locals.id;
 
-    return this.messagesService.findAll({
-      where: [
-        {
-          user: id,
-          toUser: selectedUser,
-        },
-        {
-          user: selectedUser,
-          toUser: id,
-        },
-      ],
+    return await this.messagesService.findAll({
+      where: {
+        $or: [{
+            user: id,
+            toUser: selectedUser,
+          },
+          {
+            user: selectedUser,
+            toUser: id,
+          },
+        ]
+      },
       order: {
         createdAt: 'DESC',
       },
@@ -43,11 +44,11 @@ export class MessagesController {
 
   @Post()
   public async create(
-    @Req() req: any,
+    @Res({passthrough: true}) res: any,
     @Body() createMessageDto: CreateMessageDto,
   ): Promise<MessageEntity> {
-    const user = req.user as User;
+    const userId = res.locals.id;
 
-    return await this.messagesService.create(user, createMessageDto);
+    return await this.messagesService.create(userId, createMessageDto);
   }
 }

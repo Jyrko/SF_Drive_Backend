@@ -1,11 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, ObjectID, ObjectIdColumn } from 'typeorm';
 
 import { User } from '../../auth/entities/user.entity';
 
-@Entity('message')
+@Entity('messages')
 export class MessageEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @ObjectIdColumn()
+  _id: ObjectID;
 
   @ManyToOne(() => User)
   user: User;

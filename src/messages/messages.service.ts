@@ -1,33 +1,35 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../auth/entities/user.entity';
 import { AuthService } from 'src/auth/auth.service';
-import { FindManyOptions, Repository } from 'typeorm';
+import { FindManyOptions, getMongoRepository } from 'typeorm';
+import { ObjectID } from 'mongodb';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { MessageEntity } from './entity/message.entity';
 
 @Injectable()
 export class MessagesService {
   constructor(
-    @InjectRepository(MessageEntity)
-    private readonly messageRepository: Repository<MessageEntity>,
     private readonly usersService: AuthService,
   ) {}
 
-  findAll(options?: FindManyOptions<MessageEntity>) {
-    return this.messageRepository.find({
+
+  async findAll(options?: any) {
+    const messageRepository = getMongoRepository(MessageEntity);
+    console.log(options);
+    return await messageRepository.find({
       relations: ['user', 'toUser'],
       ...options,
     });
   }
 
   async create(
-    user: User,
+    userId: string,
     createMessageDto: CreateMessageDto,
   ): Promise<MessageEntity> {
-    const toUser = await this.usersService.findOne({
-      where: { id: createMessageDto.toUserId },
-    });
+    const messageRepository = getMongoRepository(MessageEntity);
+
+    const toUser = await this.usersService.findOne({ _id: new ObjectID(createMessageDto.toUserId) });
+
+    const user = await this.usersService.findOne({ _id: new ObjectID(userId)});
 
     if (!toUser) {
       throw new HttpException(
@@ -35,14 +37,16 @@ export class MessagesService {
         HttpStatus.NOT_FOUND,
       );
     }
+    console.log(user);
+    console.log(toUser);
 
     try {
-      const message: MessageEntity = this.messageRepository.create({
+      const message: MessageEntity = messageRepository.create({
         user,
         toUser,
         body: createMessageDto.body,
       });
-      return await this.messageRepository.save(message);
+      return await messageRepository.save(message);
     } catch (error) {
       switch (error.code) {
         case 'SQLITE_CONSTRAINT':
@@ -51,5 +55,9 @@ export class MessagesService {
           throw new HttpException(error.message, HttpStatus.NOT_IMPLEMENTED);
       }
     }
+  }
+
+  cleanupUser() {
+
   }
 }

@@ -21,6 +21,7 @@ export class AuthMiddleware implements NestMiddleware {
         throw new UnauthorizedException();
       }
       res.locals.id = data.id;
+      // req.locals.id = data.id;
     } catch (e) {
       throw new UnauthorizedException();
     }
