@@ -7,6 +7,7 @@ import { join } from 'path';
 
 import {AuthModule} from './auth/auth.module';
 import { CarsModule } from './cars/cars.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { CarsModule } from './cars/cars.module';
       ]
     }),
     AuthModule,
-    CarsModule
+    CarsModule,
+    MessagesModule
   ],
   controllers: [AppController],
   providers: [AppService],
