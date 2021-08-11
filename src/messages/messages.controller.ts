@@ -5,6 +5,7 @@ import {
   Post,
   Query,
   Req,
+  Res,
 } from '@nestjs/common';
 import { User } from '../auth/entities/user.entity';
 import { CreateMessageDto } from './dto/create-message.dto';
@@ -18,19 +19,20 @@ export class MessagesController {
   @Get()
   public async messages(
     @Req() req: any,
+    @Res() res: any,
     @Query('selectedUser') selectedUser: string,
   ) {
-    const user = req.user as User;
+    const id = res.locals.id;
 
     return this.messagesService.findAll({
       where: [
         {
-          user: user._id,
+          user: id,
           toUser: selectedUser,
         },
         {
           user: selectedUser,
-          toUser: user._id,
+          toUser: id,
         },
       ],
       order: {
