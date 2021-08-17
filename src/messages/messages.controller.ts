@@ -11,6 +11,7 @@ import { User } from '../auth/entities/user.entity';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { MessageEntity } from './entity/message.entity';
 import { MessagesService } from './messages.service';
+import { ObjectID } from "mongodb";
 
 @Controller('messages')
 export class MessagesController {
@@ -26,20 +27,31 @@ export class MessagesController {
 
     return await this.messagesService.findAll({
       where: {
-        $or: [{
-            user: id,
-            toUser: selectedUser,
-          },
-          {
-            user: selectedUser,
-            toUser: id,
-          },
-        ]
-      },
-      order: {
-        createdAt: 'DESC',
-      },
+        user: {
+          _id: new ObjectID(id)
+        }
+      }
     });
+    // return await this.messagesService.findAll({
+    //   where: {
+    //     $or: [{
+    //         user: {
+    //           _id: new ObjectID(id)
+    //         },
+    //         toUser: selectedUser,
+    //       },
+    //       {
+    //         user: selectedUser,
+    //         toUser: {
+    //           _id: new ObjectID(id)
+    //         }
+    //       },
+    //     ]
+    //   },
+    //   order: {
+    //     createdAt: 'DESC',
+    //   },
+    // });
   }
 
   @Post()
