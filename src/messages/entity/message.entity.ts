@@ -7,10 +7,10 @@ export class MessageEntity {
   @ObjectIdColumn()
   _id: ObjectID;
 
-  @ManyToOne(() => User)
+  @Column(() => User)
   user: User;
 
-  @ManyToOne(() => User)
+  @Column(() => User)
   toUser: User;
 
   @Column({

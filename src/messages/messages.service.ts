@@ -4,6 +4,7 @@ import { FindManyOptions, getMongoRepository } from 'typeorm';
 import { ObjectID } from 'mongodb';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { MessageEntity } from './entity/message.entity';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class MessagesService {
@@ -16,8 +17,7 @@ export class MessagesService {
     const messageRepository = getMongoRepository(MessageEntity);
     console.log(options);
     return await messageRepository.find({
-      relations: ['user', 'toUser'],
-      ...options,
+      ...options
     });
   }
 
@@ -27,9 +27,9 @@ export class MessagesService {
   ): Promise<MessageEntity> {
     const messageRepository = getMongoRepository(MessageEntity);
 
-    const toUser = await this.usersService.findOne({ _id: new ObjectID(createMessageDto.toUserId) });
+    const toUser = await this.usersService.findOne({ _id: new ObjectID(createMessageDto.toUserId) }) as User;
 
-    const user = await this.usersService.findOne({ _id: new ObjectID(userId)});
+    const user = await this.usersService.findOne({ _id: new ObjectID(userId)}) as User;
 
     if (!toUser) {
       throw new HttpException(
@@ -37,13 +37,13 @@ export class MessagesService {
         HttpStatus.NOT_FOUND,
       );
     }
-    console.log(user);
-    console.log(toUser);
+    console.log(typeof user);
+    console.log(typeof toUser);
 
     try {
       const message: MessageEntity = messageRepository.create({
-        user,
-        toUser,
+        user: user,
+        toUser: toUser,
         body: createMessageDto.body,
       });
       return await messageRepository.save(message);

@@ -25,33 +25,19 @@ export class MessagesController {
   ) {
     const id = res.locals.id;
 
+    console.log(selectedUser);
     return await this.messagesService.findAll({
       where: {
-        user: {
-          _id: new ObjectID(id)
-        }
+        $or: [{
+          ['user._id']: new ObjectID(id),
+          ['toUser._id']: new ObjectID(selectedUser)
+        },
+        {
+          ['user._id']: new ObjectID(selectedUser),
+          ['toUser._id']: new ObjectID(id),
+        }]
       }
     });
-    // return await this.messagesService.findAll({
-    //   where: {
-    //     $or: [{
-    //         user: {
-    //           _id: new ObjectID(id)
-    //         },
-    //         toUser: selectedUser,
-    //       },
-    //       {
-    //         user: selectedUser,
-    //         toUser: {
-    //           _id: new ObjectID(id)
-    //         }
-    //       },
-    //     ]
-    //   },
-    //   order: {
-    //     createdAt: 'DESC',
-    //   },
-    // });
   }
 
   @Post()
