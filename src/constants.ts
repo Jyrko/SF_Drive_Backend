@@ -23,3 +23,5 @@ export const JWT_REG_OBJECT = {
   secret: SECRET_KEY,
   signOptions: { expiresIn: '1d' }
 };
+
+export const MONGODB_PASSWORD = "Ekn57UKsmmhSrIBU";

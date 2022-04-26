@@ -6,7 +6,8 @@ import { AuthFilesService } from './auth-files.service';
 import * as bcrypt from 'bcrypt';
 import {JwtService} from '@nestjs/jwt';
 import {Response} from 'express';
-import { ObjectID } from 'typeorm';
+// import { ObjectID } from 'typeorm';
+import { ObjectID } from 'mongodb';
 
 @Controller('auth')
 export class AuthController {
@@ -87,6 +88,7 @@ export class AuthController {
     try {
       const accessToken = params.accessToken;
       const data = await this.jwtService.verifyAsync(accessToken);
+      console.log("Loging access token and data");
       console.log(accessToken);
       console.log(data);
 
@@ -109,6 +111,7 @@ export class AuthController {
   async getUserBasicInfo(
     @Param() params
   ) {
+    console.log("Basic-info, user id - " + params.id);
     const user = await this.authService.findOne({_id: new ObjectID(params.id)});
     const filename = this.authFilesService.findUserImagePath(params.id);
     const {password, birthdate, passport, license, ...result} = user;
@@ -122,6 +125,7 @@ export class AuthController {
   gerUserImage(
     @Param() params
   ) {
+    console.log("Get-image, user id - " + params.id);
     const filename = this.authFilesService.findUserImagePath(params.id);
     return {
       profileImage: `/files/users/${params.id}/${filename}`

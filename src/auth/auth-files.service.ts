@@ -27,7 +27,7 @@ export class AuthFilesService {
 
   findUserImagePath(id: string) {
     const folderPath = `./files/users/${id}`;
-    console.log(folderPath);
+    console.log("Loging folder path: " + folderPath);
     if (fs.existsSync(folderPath)) {
       const files = fs.readdirSync(folderPath).filter(file => file.includes('.'));
       if (files.length) return files[0];
