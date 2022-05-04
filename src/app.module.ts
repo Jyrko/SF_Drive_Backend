@@ -26,11 +26,12 @@ const uri2 = "mongodb+srv://mongouser%3AFYkjhvajHRivuFASdgkuyF%40clusterlearn.eo
     TypeOrmModule.forRoot({
       name: "default",
       type: "mongodb",
-      host: uri2,
+      host: "localhost",
+      port: 27017,
       database: "users-db",
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      ssl: true,
+      // ssl: false,
       entities: [
         `${__dirname}/**/*.entity.{ts,js}`,
       ]
