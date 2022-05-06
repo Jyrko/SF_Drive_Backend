@@ -14,9 +14,6 @@ import { MessagesModule } from './messages/messages.module';
 
 //export const MONGO_CONNECTION = "mongodb+srv://nestuser:yourpassword@your-mongo-db-url?retryWrites=true&w=majority"
 
-const uri = "mongodb+srv://mongouser%3AFYkjhvajHRivuFASdgkuyF%40clusterlearn.eo7u8.mongodb.net?retryWrites=true&w=majority";
-const uri2 = "mongodb+srv://mongouser%3AFYkjhvajHRivuFASdgkuyF%40clusterlearn.eo7u8.mongodb.net/users-db?retryWrites=true&w=majority"
-
 @Module({
   imports: [
     ServeStaticModule.forRoot({

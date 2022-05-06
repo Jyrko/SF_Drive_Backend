@@ -93,9 +93,11 @@ export class AuthController {
       console.log(data);
 
       if (!data) {
+        console.log("No data")
         throw new UnauthorizedException();
       }
 
+      console.log("Before authentication");
       const user = await this.authService.findOne({_id: new ObjectID(data.id)});
 
       const {password, ...result} = user;
@@ -103,6 +105,7 @@ export class AuthController {
       return {...result, message: "success"};
 
     } catch (e) {
+      console.log("Token verification exception: " + e);
       throw new UnauthorizedException();
     }
   }
